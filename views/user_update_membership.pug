@@ -1,0 +1,18 @@
+extends layout
+
+block content
+
+  h1 #{title}
+  if user
+    p #[strong First Name:] #{user.firstName}
+    p #[strong Second Name:] #{user.secondName}
+    p #[strong Username:] #{user.usernameEmail}
+    p #[strong Are You A Member? ] #{user.membershipStatus}
+    form(method='POST')
+        label(for='password') Enter Membership Password To Become A Member
+        input#password.form-control(type='text', placeholder='Enter Membership Password To Become A Member' name='password' required)
+        button.btn.btn-primary(type='submit') Submit
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

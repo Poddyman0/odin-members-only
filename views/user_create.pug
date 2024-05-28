@@ -1,0 +1,33 @@
+extends layout
+
+block content
+
+  h1 #{title}
+  form(method='POST')
+    div.form-group
+      label(for='firstName') First Name:
+      input#firstName.form-control(type='text', placeholder='Enter First Name.' name='firstName' required value=(undefined===user ? '' : user.firstName) )
+    div.form-group
+      label(for='secondName') Second Name:
+      input#secondName.form-control(type='text', placeholder='Enter Second Name.' name='secondName' required value=(undefined===user ? '' : user.secondName) )
+    div.form-group
+      label(for='usernameEmail') Username/Email:
+      input#usernameEmail.form-control(type='text', placeholder='Enter Email To Be Used As Username.' name='usernameEmail' required value=(undefined===user ? '' : user.usernameEmail) )
+    div.form-group
+      label(for='password') Password:
+      input#password.form-control(type='text', placeholder='Enter Password.' name='password' required value=(undefined===user ? '' : user.password) )
+    div.form-group
+      label(for='passwordConfirmation') Confirm Password:
+      input#passwordConfirmation.form-control(type='text', placeholder='Enter Password Confirmation.' name='passwordConfirmation' required )
+    label Admin Status: 
+    div.form-group
+        label(for="adminTrue") Become Admin
+        input.checkbox-input(type='checkbox', name='adminTrue', id='adminTrue')
+    div.form-group 
+      label(for='adminPassword') Admin Password:
+      input#adminPassword.form-control(type='text', placeholder='Enter Admin Password To Become An Admin If You Selected To Become An Admin' name='adminPassword' value=(undefined===user ? '' : user.adminStatus) )
+    button.btn.btn-primary(type='submit') Submit
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
