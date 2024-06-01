@@ -5,14 +5,16 @@ block content
 
   if messages_list.length
     each message in messages_list
-      div
-        p #{message.title}
+      div.card
+        h4 
+          strong= message.title
         p #[strong Message:] #{message.text}
-        if user.membershipStatus
-          p #[strong Timestamp:] #{message.timestamp_formatted}
-          p #[strong Created By:] #{message.fullName}
-        if user.adminStatus
-          a(href=`${message.url}/delete`) Delete Message
-
+        if user
+          if user.membershipStatus 
+            p #[strong Timestamp:] #{message.timestamp_formatted}
+            p #[strong Created By:] #{message.fullName}
+          if user.adminStatus
+            a(href=`${message.url}/delete`) Delete Message
   else
     p There are no messages.
+

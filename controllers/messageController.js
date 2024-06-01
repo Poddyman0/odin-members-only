@@ -19,6 +19,7 @@ exports.index_get = asyncHandler(async (req, res, next) => {
             }
         })
     })
+
     res.render("index", {user: res.locals.currentUser, title: "Messsages List", messages_list: allMessages });
         
 

@@ -73,7 +73,7 @@ router.post("/user/login", user_controller.user_login_post);
 router.get("/user/logout", user_controller.user_logout_get);
 */
 // POST request to log out user.
-router.post("/user/logout", user_controller.user_logout_post);
+router.get("/user/logout", user_controller.user_logout_post);
 
 /*
 // GET request for one user.

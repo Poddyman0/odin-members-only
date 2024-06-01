@@ -3,3 +3,10 @@
   padding: 0;
   list-style: none;
 }
+
+.card {
+  border: 5px solid white;
+  padding: 10px;
+  background-color: aliceblue;
+
+}

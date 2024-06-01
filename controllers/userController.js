@@ -23,10 +23,18 @@ exports.user_login_post = passport.authenticate("local", {
     failureFlash: true
 });
 
-exports.user_logout_post = (req,res) => {
-    req.logout();
-    //res.redirect("/catalog")
-}
+exports.user_logout_post = (req, res) => {
+  if (res.locals.currentUser) {
+    req.logout((err) => {
+      if (err) {
+        return next(err); // Passes any errors to the error handler
+      }
+      res.render("user_logout", { user: null }); // User is now logged out, so pass null
+    });
+  } else {
+    res.render("user_logout", { user: null });
+  }
+};
 
 /*
 [
@@ -244,18 +252,18 @@ exports.user_update_membership_get = asyncHandler(async (req, res, next) => {
     // Get details of genre and all associated books (in parallel)
     console.log("reslocalscurrentUser:", res.locals.currentUser)
     //const user = await User.findById(res.locals.currentUser._id).exec();
-    
+    let errors = []
     if (!res.locals.currentUser) {
-        // No results.
-        const err = new Error("Login to access your membership status.");
-        err.status = 404;
-        return next(err);
+      errors.push({msg: "You must login to upgrade membership status."})
+    } else if (res.locals.currentUser) {
+      errors = []
     }
     
 
     res.render("user_update_membership", {
         title: "Update User Membership Status",
         user: res.locals.currentUser,
+        errors: errors,
     });
   });
 
