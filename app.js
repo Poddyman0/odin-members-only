@@ -12,18 +12,20 @@ const flash = require('connect-flash')
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require('bcryptjs')
+require('dotenv').config()
 
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
-// connection: mongodb+srv://odinmembersonly:odinmembersonly@cluster0.sl55rgi.mongodb.net/local_library?retryWrites=true&w=majority&appName=Cluster0
 const app = express();
 // Set up mongoose connection
-const mongoose = require("mongoose");
 const expressAsyncHandler = require('express-async-handler');
+
+const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-const mongoDB = "mongodb+srv://odinmembersonly:odinmembersonly@cluster0.sl55rgi.mongodb.net/local_library?retryWrites=true&w=majority&appName=Cluster0";
+
+const mongoDB = process.env.MONGODB_URI
 
 main().catch((err) => console.log(err));
 async function main() {
@@ -45,6 +47,7 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
 //added below
+/*
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     const user = await User.findOne({ usernameEmail: username }).catch(err => done(err));
@@ -57,6 +60,19 @@ passport.use(
     return done(null, user);
   })
 );
+*/
+passport.use(
+  new LocalStrategy(async (username, password, done) => {
+  const user = await User.findOne({ usernameEmail: username }).catch(err => done(err));
+  console.log(`User ${username} attempted to log in.`);
+  //if (err) return done(err);
+  if (!user) return done(null, false, { message: "Incorrect username" });
+  if (!bcrypt.compareSync(password, user.password)) { 
+      return done(null, false, { message: "Incorrect password" });
+  }    
+  return done(null, user);
+}));
+
 
 //sending data to be stored:
 passport.serializeUser((user, done) => {

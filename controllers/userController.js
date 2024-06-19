@@ -23,6 +23,12 @@ exports.user_login_post = passport.authenticate("local", {
     failureFlash: true
 });
 
+/*
+    bcrypt.compare(myPlaintextPassword, hash, (err, res) => {
+
+      })
+*/
+
 exports.user_logout_post = (req, res) => {
   if (res.locals.currentUser) {
     req.logout((err) => {
@@ -223,7 +229,7 @@ exports.user_create_post = [
         });
         return;
       } else {
-        bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
+        bcrypt.hash(req.body.password, 12, async (err, hashedPassword) => {
             if (err) {
                 return next(err)
             } else if (!err) {
