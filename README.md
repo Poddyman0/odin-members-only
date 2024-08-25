@@ -45,3 +45,39 @@ In this project, I built a web application for an exclusive clubhouse where memb
   </li>
   <li><strong>Deployment:</strong> The project is deployed on a chosen PaaS (Platform as a Service) provider, making it accessible online.</li>
 </ul>
+
+Project Title: Exclusive Clubhouse
+Description:
+In this project, I built a web application for an exclusive clubhouse where members can post anonymous messages. While all visitors can read the messages, only members can see the author of each post. The application involves user authentication, database management, and implementing role-based access control.
+
+Technologies Used:
+
+Node.js: For server-side JavaScript execution.
+Express.js: For handling HTTP requests and routing.
+MongoDB: For database management and storing user and message data.
+Mongoose: For interacting with MongoDB using an object data modeling (ODM) library.
+Passport.js: For user authentication.
+bcrypt: For password hashing and security.
+Features:
+
+Database Models:
+
+User Model: Stores user details including full name, email (used as username), hashed password, and membership status. An optional admin field is added for role-based access.
+Message Model: Stores messages with a title, timestamp, text content, and a reference to the author.
+User Authentication:
+
+Sign-Up Form: Allows users to create an account with full name, email, password, and a confirm password field. Passwords are hashed using bcrypt, and inputs are validated.
+Login Form: Users can log in using their email and password. Authentication is handled using Passport.js.
+Join the Club: Users need to enter a secret passcode to gain membership status. This feature adds exclusivity to the clubhouse.
+Message Management:
+
+Create Messages: Logged-in users can create new messages. This functionality is only visible to authenticated users.
+Display Messages: All messages are displayed on the homepage. Non-members see only the message content, while members can also see the author’s name and date.
+Admin Capabilities: An admin user can see and delete any message. Admin status is granted either through a special passcode or a checkbox during sign-up.
+Role-Based Access:
+
+Membership Status: Only users with membership status can see message authors and dates.
+Admin Privileges: Admins have additional permissions, including the ability to delete messages. Admin users are distinguished with a special field in the database.
+Deployment:
+
+The project is deployed on a chosen PaaS (Platform as a Service) provider, making it accessible online.
