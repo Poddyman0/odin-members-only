@@ -25,7 +25,7 @@ const expressAsyncHandler = require('express-async-handler');
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
-const mongoDB = process.env.MONGODB_URI
+const mongoDB = process.env.MONGO_URI
 
 main().catch((err) => console.log(err));
 async function main() {
@@ -99,6 +99,14 @@ app.use((req, res, next) => {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  next();
+})
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
